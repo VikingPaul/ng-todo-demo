@@ -28,6 +28,17 @@
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
+
+
+
+
+
+
+
+
+
+
+
   <div ng-controller="TodoCtrl">
     <div class="row">
       <div class="col-xs-6 col-xs-offset-3">
@@ -35,6 +46,10 @@
         <button class="col-xs-6 btn btn-info" ng-click="allItem()">All Item</button>
       </div>
     </div>
+
+
+
+
     <div class="row">
       <div class="col-xs-10 col-xs-offset-1 main-container">
         <div class="col-xs-12" ng-show="showListView">
@@ -42,10 +57,48 @@
         </div>
         <div class="col-xs-12" ng-show="!showListView">
           <h1>New Todo</h1>
+          <form>
+            <div>
+              <label>Task Name</label>
+              <input type="text" class="form-control" placeholder="something important" ng-model="newTask.task">
+            </div>
+            <div>
+              <label>Due Date</label>
+              <input type="text" class="form-control" placeholder="date" ng-model="newTask.dueDate">
+            </div>
+            <div>
+              <label>Assigned to</label>
+              <input type="text" class="form-control" placeholder="person name" ng-model="newTask.assignedTo">
+            </div>
+            <div>
+              <label>Urgency</label>
+              <input type="text" class="form-control" placeholder="how important" ng-model="newTask.urgency">
+            </div>
+            <div>
+              <label>Local</label>
+              <input type="text" class="form-control" placeholder="where to do it" ng-model="newTask.location">
+            </div>
+            <div>
+              <label>Dependencies</label>
+              <input type="text" class="form-control" placeholder="what you need" ng-model="newTask.dependencies">
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
   <script src="lib/bower_components/jquery/dist/jquery.min.js"></script>
   <script src="lib/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="lib/bower_components/angular/angular.min.js"></script>
