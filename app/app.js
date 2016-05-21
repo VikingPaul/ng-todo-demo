@@ -11,7 +11,7 @@ app.controller('NavCtrl', function($scope){
 app.controller("TodoCtrl", function($scope) {
   $scope.welcome = "hello";
   $scope.showListView = false;
-  $scope.newTask = {}
+  $scope.newTask = {};
   $scope.items = [
   {
     id: 0,
@@ -21,7 +21,7 @@ app.controller("TodoCtrl", function($scope) {
     assignedTo: "greg",
     urgency: "high",
     location: "here",
-    dependencies: ["stuff", "more stuff"]
+    dependencies: "stuff, more stuff"
   },{
     id: 1,
     task: "grade quizes",
@@ -30,7 +30,7 @@ app.controller("TodoCtrl", function($scope) {
     assignedTo: "joe",
     urgency: "high",
     location: "NSS",
-    dependencies: ["wifi", "vodka", "laptop"]
+    dependencies: "wifi, vodka, laptop"
   },{
     id: 2,
     task: "sleep",
@@ -39,9 +39,14 @@ app.controller("TodoCtrl", function($scope) {
     assignedTo: "me",
     urgency: "medium",
     location: "home",
-    dependencies: ["dog", "bed", "pillows"]
+    dependencies: "dog, bed, pillows"
   }];
-
+  $scope.addNewItem = function() {
+    $scope.newTask.isCompleted = false;
+    $scope.newTask.id = $scope.items.length;
+    $scope.items.push($scope.newTask);
+    $scope.newTask = "";
+  };
   $scope.newItem = function() {
     console.log("new item");
     $scope.showListView = false;
