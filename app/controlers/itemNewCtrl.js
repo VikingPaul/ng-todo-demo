@@ -1,4 +1,4 @@
-app.controller("itemNewCtrl", function($scope, $http, $location) {
+app.controller("itemNewCtrl", function($scope, $http, $location, itemStorage) {
   $scope.newTask = {
     assignedTo: "",
     dependencies: "",
@@ -8,19 +8,11 @@ app.controller("itemNewCtrl", function($scope, $http, $location) {
     urgency: "",
     isCompleted: false
   };
-  $scope.items = [];
   $scope.addNewItem = function() {
-    $http.post("https://viking-todo-app.firebaseio.com/things.json", JSON.stringify({
-        assignedTo: $scope.newTask.assignedTo,
-        dependencies: $scope.newTask.dependencies,
-        dueDate: $scope.newTask.dueDate,
-        location: $scope.newTask.location,
-        task: $scope.newTask.task,
-        urgency: $scope.newTask.urgency,
-        isCompleted: $scope.newTask.isCompleted
+    itemStorage.postItem($scope.newTask)
+      .then(function (response) {
+        console.log(response);
+        $location.url("/items/list")
       })
-    ).success(function(thing){
-      $location.url("/items/list");
-    });
   };
 });

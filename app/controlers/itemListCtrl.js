@@ -1,21 +1,16 @@
-app.controller("itemListCtrl", function($scope, $http) {
+app.controller("itemListCtrl", function($scope, $http, itemStorage) {
   $scope.items = [];
-  var getItems = function() {
-    $http.get("https://viking-todo-app.firebaseio.com/things.json")
-      .success(function(items) {
-        Object.keys(items).forEach(function(key) {
-          items[key].id = key;
-          $scope.items.push(items[key]);
-      });
-    });
-  };
-  getItems();
+
+  itemStorage.getItemList().then(function(itemCollection) {
+    $scope.items = itemCollection;
+  })
+
   $scope.delete = function(id) {
-    console.log("id", id);
-    $http.delete(`https://viking-todo-app.firebaseio.com/things/${id}.json`)
-      .success(function() {
-        $scope.items = [];
-        getItems();
-      });
+    itemStorage.deleteItem(id).then(function(thing) {
+      console.log(thing)
+      itemStorage.getItemList().then(function(itemCollection) {
+        $scope.items = itemCollection;
+      })
+    })
   };
 });
