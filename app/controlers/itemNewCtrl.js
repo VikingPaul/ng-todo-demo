@@ -20,7 +20,7 @@ app.controller("itemNewCtrl", function($scope, $http, $location) {
         isCompleted: $scope.newTask.isCompleted
       })
     ).success(function(thing){
-      $location.url("/items/list")
-    })
+      $location.url("/items/list");
+    });
   };
 });
