@@ -1,37 +1,26 @@
-app.controller("itemNewCtrl", function($scope) {
-  $scope.newTask = {};
-  $scope.items = [{
-    id: 0,
-    task: "mow",
-    isCompleted: false,
-    dueDate: "NOW",
-    assignedTo: "tom",
-    urgency: "high",
-    location: "home",
-    dependencies: "stuff, more stuff"
-  },{
-    id: 1,
-    task: "grade quizes",
-    isCompleted: false,
-    dueDate: "NOW",
-    assignedTo: "joe",
-    urgency: "high",
-    location: "NSS",
-    dependencies: "wifi, vodka, laptop"
-  },{
-    id: 2,
-    task: "sleep",
-    isCompleted: false,
-    dueDate: "soon",
-    assignedTo: "me",
-    urgency: "medium",
-    location: "home",
-    dependencies: "dog, bed, pillows, vodka"
-  }];
+app.controller("itemNewCtrl", function($scope, $http, $location) {
+  $scope.newTask = {
+    assignedTo: "",
+    dependencies: "",
+    dueDate: "",
+    location: "",
+    task: "",
+    urgency: "",
+    isCompleted: false
+  };
+  $scope.items = [];
   $scope.addNewItem = function() {
-    $scope.newTask.isCompleted = false;
-    $scope.newTask.id = $scope.items.length;
-    $scope.items.push($scope.newTask);
-    $scope.newTask = "";
+    $http.post("https://viking-todo-app.firebaseio.com/things.json", JSON.stringify({
+        assignedTo: $scope.newTask.assignedTo,
+        dependencies: $scope.newTask.dependencies,
+        dueDate: $scope.newTask.dueDate,
+        location: $scope.newTask.location,
+        task: $scope.newTask.task,
+        urgency: $scope.newTask.urgency,
+        isCompleted: $scope.newTask.isCompleted
+      })
+    ).success(function(thing){
+      $location.url("/items/list")
+    })
   };
 });
