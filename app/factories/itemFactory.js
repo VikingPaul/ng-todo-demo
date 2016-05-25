@@ -1,7 +1,7 @@
 "use strict";
 app.factory('itemStorage', function($http, $q){
   var getItemList = function() {
-    let itemList = []
+    let itemList = [];
     return $q(function(resolve, reject) {
       $http.get("https://viking-todo-app.firebaseio.com/things.json")
         .success(function(items) {
