@@ -1,4 +1,5 @@
-var app = angular.module("TodoApp", ['ngRoute']);
+var app = angular.module("TodoApp", ['ngRoute'])
+  .constant('URL', 'https://viking-todo-app.firebaseio.com/');
 
 app.config(function($routeProvider) {
   $routeProvider
