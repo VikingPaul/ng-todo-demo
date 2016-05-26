@@ -12,4 +12,8 @@ app.controller("itemListCtrl", function($scope, $http, itemStorage) {
       });
     });
   };
+  $scope.inputChange = function(thingy) {
+    itemStorage.updateCompletedStatus(thingy).then(function(POO) {
+    });
+  };
 });

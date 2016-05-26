@@ -1,5 +1,5 @@
 <h1>{{selectedItem.task}} Deets</h1>
-<button class="btn btn-info">Edit</button>
+<a class="btn btn-info" ng-href="#/items/{{selectedItem.id}}/edit">Edit</a>
 <h3>task completer: {{selectedItem.assignedTo}}</h3>
 <h3>finish by: {{selectedItem.dueDate}}</h3>
 <h3>urgency: {{selectedItem.urgency}}</h3>

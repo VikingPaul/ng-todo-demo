@@ -41,5 +41,57 @@ app.factory('itemStorage', function($http, $q, URL){
     });
   };
 
-  return {getItemList:getItemList, deleteItem:deleteItem, postItem: postItem};
+  var getSingleItem = function(itemId) {
+    return $q(function(resolve, reject) {
+      $http.get(`${URL}things/${itemId}.json`)
+        .success(function(items) {
+          resolve(items);
+        }).error(function(error){
+        reject(error);
+        });
+    });
+  };
+
+  var updateItem = function(itemId, newItem){
+    return $q(function(resolve, reject) {
+      $http.put(
+        URL + "things/" + itemId + ".json",
+          JSON.stringify({
+            assignedTo: newItem.assignedTo,
+            dependencies: newItem.dependencies,
+            dueDate: newItem.dueDate,
+            isCompleted: newItem.isCompleted,
+            location: newItem.location,
+            task: newItem.task,
+            urgency: newItem.urgency
+        }))
+          .success(
+            function(thing) {
+              resolve(thing);
+            });
+    });
+  };
+
+  var updateCompletedStatus = function(newItem){
+    return $q(function(resolve, reject) {
+      $http.put(
+        URL + "things/" + newItem.id + ".json",
+          JSON.stringify({
+            assignedTo: newItem.assignedTo,
+            dependencies: newItem.dependencies,
+            dueDate: newItem.dueDate,
+            isCompleted: newItem.isCompleted,
+            location: newItem.location,
+            task: newItem.task,
+            urgency: newItem.urgency
+        }))
+          .success(
+            function(thing) {
+              resolve(thing);
+            });
+    });
+  };
+
+
+  return {getItemList:getItemList, deleteItem:deleteItem, postItem:postItem, getSingleItem:getSingleItem, updateItem:updateItem, updateCompletedStatus:updateCompletedStatus};
 });
