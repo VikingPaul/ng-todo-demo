@@ -8,8 +8,8 @@ app.controller("itemViewCtrl", function($scope, $http,$routeParams, itemStorage)
 
   itemStorage.getItemList().then(function(itemCollection) {
     $scope.items = itemCollection;
-    $scope.selectedItem = $scope.tiems.filter(function(item) {
+    $scope.selectedItem = $scope.items.filter(function(item) {
       return item.id === $routeParams.itemId;
-    })[0]
-  })
+    })[0];
+  });
 });

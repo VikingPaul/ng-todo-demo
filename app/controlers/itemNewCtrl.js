@@ -1,4 +1,6 @@
-app.controller("itemNewCtrl", function($scope, $http, $location, itemStorage) {
+app.controller("itemNewCtrl", function($scope, $location, itemStorage) {
+  $scope.title = "New Item";
+  $scope.button = "Save";
   $scope.newTask = {
     assignedTo: "",
     dependencies: "",
@@ -12,7 +14,7 @@ app.controller("itemNewCtrl", function($scope, $http, $location, itemStorage) {
     itemStorage.postItem($scope.newTask)
       .then(function (response) {
         console.log(response);
-        $location.url("/items/list")
-      })
+        $location.url("/items/list");
+      });
   };
 });

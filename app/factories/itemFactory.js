@@ -1,9 +1,8 @@
-"use strict";
-app.factory('itemStorage', function($http, $q){
+app.factory('itemStorage', function($http, $q, URL){
   var getItemList = function() {
-    let itemList = [];
+    var itemList = [];
     return $q(function(resolve, reject) {
-      $http.get("https://viking-todo-app.firebaseio.com/things.json")
+      $http.get(`${URL}things.json`)
         .success(function(items) {
           Object.keys(items).forEach(function(key) {
             items[key].id = key;
@@ -18,7 +17,7 @@ app.factory('itemStorage', function($http, $q){
 
   var deleteItem = function(itemId) {
     return $q(function(resolve, reject) {
-      $http.delete(`https://viking-todo-app.firebaseio.com/things/${itemId}.json`)
+      $http.delete(`${URL}things/${itemId}.json`)
         .success(function(thingy) {
           resolve(thingy);
         });
@@ -27,7 +26,7 @@ app.factory('itemStorage', function($http, $q){
 
   var postItem = function(newItem) {
     return $q(function(resolve,reject) {
-      $http.post("https://viking-todo-app.firebaseio.com/things.json", JSON.stringify({
+      $http.post(`${URL}things.json`, JSON.stringify({
           assignedTo: newItem.assignedTo,
           dependencies: newItem.dependencies,
           dueDate: newItem.dueDate,
@@ -38,9 +37,61 @@ app.factory('itemStorage', function($http, $q){
       }))
         .success(function(thingy) {
           resolve(thingy);
-        })
-    })
-  }
+        });
+    });
+  };
 
-  return {getItemList:getItemList, deleteItem:deleteItem, postItem: postItem}
-})
+  var getSingleItem = function(itemId) {
+    return $q(function(resolve, reject) {
+      $http.get(`${URL}things/${itemId}.json`)
+        .success(function(items) {
+          resolve(items);
+        }).error(function(error){
+        reject(error);
+        });
+    });
+  };
+
+  var updateItem = function(itemId, newItem){
+    return $q(function(resolve, reject) {
+      $http.put(
+        URL + "things/" + itemId + ".json",
+          JSON.stringify({
+            assignedTo: newItem.assignedTo,
+            dependencies: newItem.dependencies,
+            dueDate: newItem.dueDate,
+            isCompleted: newItem.isCompleted,
+            location: newItem.location,
+            task: newItem.task,
+            urgency: newItem.urgency
+        }))
+          .success(
+            function(thing) {
+              resolve(thing);
+            });
+    });
+  };
+
+  var updateCompletedStatus = function(newItem){
+    return $q(function(resolve, reject) {
+      $http.put(
+        URL + "things/" + newItem.id + ".json",
+          JSON.stringify({
+            assignedTo: newItem.assignedTo,
+            dependencies: newItem.dependencies,
+            dueDate: newItem.dueDate,
+            isCompleted: newItem.isCompleted,
+            location: newItem.location,
+            task: newItem.task,
+            urgency: newItem.urgency
+        }))
+          .success(
+            function(thing) {
+              resolve(thing);
+            });
+    });
+  };
+
+
+  return {getItemList:getItemList, deleteItem:deleteItem, postItem:postItem, getSingleItem:getSingleItem, updateItem:updateItem, updateCompletedStatus:updateCompletedStatus};
+});

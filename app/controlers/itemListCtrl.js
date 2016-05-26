@@ -3,14 +3,17 @@ app.controller("itemListCtrl", function($scope, $http, itemStorage) {
 
   itemStorage.getItemList().then(function(itemCollection) {
     $scope.items = itemCollection;
-  })
+  });
 
   $scope.delete = function(id) {
     itemStorage.deleteItem(id).then(function(thing) {
-      console.log(thing)
       itemStorage.getItemList().then(function(itemCollection) {
         $scope.items = itemCollection;
-      })
-    })
+      });
+    });
+  };
+  $scope.inputChange = function(thingy) {
+    itemStorage.updateCompletedStatus(thingy).then(function(POO) {
+    });
   };
 });

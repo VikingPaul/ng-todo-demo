@@ -1,4 +1,5 @@
-var app = angular.module("TodoApp", ['ngRoute']);
+var app = angular.module("TodoApp", ['ngRoute'])
+  .constant('URL', 'https://viking-todo-app.firebaseio.com/');
 
 app.config(function($routeProvider) {
   $routeProvider
@@ -13,6 +14,10 @@ app.config(function($routeProvider) {
     .when("/items/:itemId", {
       templateUrl: "partials/items-details.html",
       controller: "itemViewCtrl"
+    })
+    .when("/items/:itemId/edit", {
+      templateUrl: "partials/items-new.html",
+      controller: "itemEditCtrl"
     })
     .otherwise("/items/list");
 });
